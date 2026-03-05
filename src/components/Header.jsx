@@ -4,7 +4,7 @@ import templatepreview3 from '../assets/template1Preview.webp'
 
 const Header = ({ setShowLogin, setCurrentState }) => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between py-16 gap-12">
+    <div className="flex flex-col md:flex-row items-center justify-between py-16 gap-12" id='home'>
 
       <div className="flex flex-col gap-4 
         w-full md:w-1/2

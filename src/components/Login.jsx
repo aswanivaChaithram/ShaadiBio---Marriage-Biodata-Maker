@@ -1,4 +1,5 @@
 import React from 'react'
+import close from "../assets/cross_icon.png"
 
 const Login = ({ setShowLogin, currentState, setCurrentState }) => {
 
@@ -15,7 +16,7 @@ const Login = ({ setShowLogin, currentState, setCurrentState }) => {
           </h2>
           <img
             onClick={() => setShowLogin(false)}
-            src=""
+            src={close}
             alt="close"
             className="w-4 cursor-pointer"
           />
