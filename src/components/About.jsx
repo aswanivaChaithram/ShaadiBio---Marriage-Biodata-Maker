@@ -47,7 +47,7 @@ const About = () => {
             Multi-Language Biodata Format
           </h2>
           <p className="text-gray-600 text-md leading-relaxed">
-            Create biodata in English, Hindi, Malayalam, Telugu, Tamil or Kannada. Switch languages in real-time.
+            Create biodata in English, Hindi, Malayalam, Telugu or Tamil. Switch languages in real-time.
           </p>
         </div>
 

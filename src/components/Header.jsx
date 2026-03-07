@@ -2,9 +2,9 @@ import React from 'react'
 import templatepreview1 from '../assets/template3Preview.webp'
 import templatepreview3 from '../assets/template1Preview.webp'
 
-const Header = ({ setShowLogin, setCurrentState }) => {
+const Header = ({ setShowLogin, setCurrentState, isAuthenticated }) => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between py-16 gap-12" id='home'>
+    <div className="flex flex-col md:flex-row items-center justify-between py-16 gap-12" id="home">
 
       <div className="flex flex-col gap-4 
         w-full md:w-1/2
@@ -20,15 +20,17 @@ const Header = ({ setShowLogin, setCurrentState }) => {
           your matrimonial profile.
         </p>
 
-        <button
-          onClick={() => {
-            setCurrentState("Register");
-            setShowLogin(true);
-          }}
-          className="w-fit mx-auto md:mx-0 px-6 py-2 rounded-full bg-orange-600 text-white font-bold text-base hover:bg-orange-700 transition duration-500 ease-in-out cursor-pointer"
-        >
-          Register Now
-        </button>
+        {!isAuthenticated && (
+          <button
+            onClick={() => {
+              setCurrentState("Register");
+              setShowLogin(true);
+            }}
+            className="w-fit mx-auto md:mx-0 px-6 py-2 rounded-full bg-orange-600 text-white font-bold text-base hover:bg-orange-700 transition duration-500 ease-in-out cursor-pointer"
+          >
+            Register Now
+          </button>
+        )}
 
       </div>
 
