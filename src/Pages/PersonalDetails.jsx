@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 // option arrays
 const genderOptions = ['Male', 'Female', 'Others'];
@@ -19,6 +20,7 @@ const nakshatraOptions = [
 const PersonalDetails = () => {
   const { t, i18n } = useTranslation();
 
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     gender: '',
@@ -39,12 +41,15 @@ const PersonalDetails = () => {
     education: '',
     occupation: '',
     income: '',
+    contactNumber: '',
+    contactEmail: '',
     timeOfBirth: '',
     placeOfBirth: '',
     rashi: '',
     nakshatra: '',
     photo: null,
   });
+  const [errors, setErrors] = useState({});
 
   // compute age when dob changes
   useEffect(() => {
@@ -64,15 +69,44 @@ const PersonalDetails = () => {
     } else {
       setFormData((f) => ({ ...f, [name]: value }));
     }
+    // clear validation error for this field once user types
+    if (errors[name]) {
+      setErrors((prev) => {
+        const nxt = { ...prev };
+        delete nxt[name];
+        return nxt;
+      });
+    }
   };
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
 
+  const handleSubmit = () => {
+    const required = [
+      'name','gender','dob','height','religion','caste','motherTongue','maritalStatus','nationality',
+      'fatherName','fatherOccupation','motherName','motherOccupation','siblingName','nativePlace',
+      'education','occupation','income','contactNumber','contactEmail','photo',
+    ];
+    const newErrors = {};
+    required.forEach((field) => {
+      if (!formData[field]) {
+        newErrors[field] = 'Please fill this field';
+      }
+    });
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    // all filled
+    navigate('/templates');
+  };
+
   const hasPersonal = ['name','gender','dob','age','height','religion','caste','motherTongue','maritalStatus','nationality'].some(k => formData[k]);
   const hasFamily = ['fatherName','fatherOccupation','motherName','motherOccupation','siblingName','nativePlace'].some(k=>formData[k]);
   const hasEducation = ['education','occupation','income'].some(k=>formData[k]);
+  const hasContact = ['contactNumber','contactEmail'].some(k=>formData[k]);
   const hasHoroscope = ['timeOfBirth','placeOfBirth','rashi','nakshatra'].some(k=>formData[k]);
 
   return (
@@ -92,7 +126,7 @@ const PersonalDetails = () => {
                 onClick={() => changeLanguage(lng)}
                 className={`px-4 py-2 rounded-full border border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white transition ${
                   i18n.language === lng ? 'bg-orange-600 text-white' : ''
-                }`}
+                } cursor-pointer`}
               >
                 {languageNames[lng]}
               </button>
@@ -100,7 +134,7 @@ const PersonalDetails = () => {
           })}
         </div>
       </div>
-      <div className="flex flex-col-reverse md:flex-row">
+      <div className="flex flex-col md:flex-row">
 
       {/* left form */}
       <div className="w-full md:w-1/2 p-6 md:overflow-y-auto md:h-screen">
@@ -114,6 +148,7 @@ const PersonalDetails = () => {
             <div>
               <label>{t('name')}</label>
               <input name="name" value={formData.name} onChange={handleInput} placeholder={t('name')} className="border p-2 rounded w-full" />
+              {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
             </div>
             <div>
               <label>{t('gender')}</label>
@@ -123,10 +158,12 @@ const PersonalDetails = () => {
                   <option key={g} value={g}>{g}</option>
                 ))}
               </select>
+              {errors.gender && <p className="text-red-500 text-xs">{errors.gender}</p>}
             </div>
             <div>
               <label>{t('dob')}</label>
               <input type="date" name="dob" value={formData.dob} onChange={handleInput} className="border p-2 rounded w-full" />
+              {errors.dob && <p className="text-red-500 text-xs">{errors.dob}</p>}
             </div>
             <div>
               <label>{t('age')}</label>
@@ -135,14 +172,17 @@ const PersonalDetails = () => {
             <div>
               <label>{t('height')}</label>
               <input name="height" value={formData.height} onChange={handleInput} placeholder="Eg: 4 Feet 8 Inch" className="border p-2 rounded w-full" />
+              {errors.height && <p className="text-red-500 text-xs">{errors.height}</p>}
             </div>
             <div>
               <label>{t('religion')}</label>
               <input name="religion" value={formData.religion} onChange={handleInput} placeholder={t('religion')} className="border p-2 rounded w-full" />
+              {errors.religion && <p className="text-red-500 text-xs">{errors.religion}</p>}
             </div>
             <div>
               <label>{t('caste')}</label>
               <input name="caste" value={formData.caste} onChange={handleInput} placeholder={t('caste')} className="border p-2 rounded w-full" />
+              {errors.caste && <p className="text-red-500 text-xs">{errors.caste}</p>}
             </div>
             <div>
               <label>{t('motherTongue')}</label>
@@ -150,6 +190,7 @@ const PersonalDetails = () => {
                 <option value="" />
                 {motherTongueOptions.map((m) => <option key={m} value={m}>{m}</option>)}
               </select>
+              {errors.motherTongue && <p className="text-red-500 text-xs">{errors.motherTongue}</p>}
             </div>
             <div>
               <label>{t('maritalStatus')}</label>
@@ -157,10 +198,12 @@ const PersonalDetails = () => {
                 <option value="" />
                 {maritalOptions.map((m) => <option key={m} value={m}>{m}</option>)}
               </select>
+              {errors.maritalStatus && <p className="text-red-500 text-xs">{errors.maritalStatus}</p>}
             </div>
             <div>
               <label>{t('nationality')}</label>
               <input name="nationality" value={formData.nationality} onChange={handleInput} placeholder={t('nationality')} className="border p-2 rounded w-full" />
+              {errors.nationality && <p className="text-red-500 text-xs">{errors.nationality}</p>}
             </div>
           </div>
         </div>
@@ -174,26 +217,32 @@ const PersonalDetails = () => {
             <div>
               <label>{t('fatherName')}</label>
               <input name="fatherName" value={formData.fatherName} onChange={handleInput} placeholder={t('fatherName')} className="border p-2 rounded w-full" />
+              {errors.fatherName && <p className="text-red-500 text-xs">{errors.fatherName}</p>}
             </div>
             <div>
               <label>{t('fatherOccupation')}</label>
               <input name="fatherOccupation" value={formData.fatherOccupation} onChange={handleInput} placeholder={t('fatherOccupation')} className="border p-2 rounded w-full" />
+              {errors.fatherOccupation && <p className="text-red-500 text-xs">{errors.fatherOccupation}</p>}
             </div>
             <div>
               <label>{t('motherName')}</label>
               <input name="motherName" value={formData.motherName} onChange={handleInput} placeholder={t('motherName')} className="border p-2 rounded w-full" />
+              {errors.motherName && <p className="text-red-500 text-xs">{errors.motherName}</p>}
             </div>
             <div>
               <label>{t('motherOccupation')}</label>
               <input name="motherOccupation" value={formData.motherOccupation} onChange={handleInput} placeholder={t('motherOccupation')} className="border p-2 rounded w-full" />
+              {errors.motherOccupation && <p className="text-red-500 text-xs">{errors.motherOccupation}</p>}
             </div>
             <div className="col-span-2">
               <label>{t('siblingName')}</label>
               <input name="siblingName" value={formData.siblingName} onChange={handleInput} placeholder={t('siblingName')} className="border p-2 rounded w-full" />
+              {errors.siblingName && <p className="text-red-500 text-xs">{errors.siblingName}</p>}
             </div>
             <div className="col-span-2">
               <label>{t('nativePlaceResidence')}</label>
               <input name="nativePlace" value={formData.nativePlace} onChange={handleInput} placeholder={t('nativePlaceResidence')} className="border p-2 rounded w-full" />
+              {errors.nativePlace && <p className="text-red-500 text-xs">{errors.nativePlace}</p>}
             </div>
           </div>
         </div>
@@ -207,14 +256,35 @@ const PersonalDetails = () => {
             <div>
               <label>{t('education')}</label>
               <input name="education" value={formData.education} onChange={handleInput} placeholder={t('education')} className="border p-2 rounded w-full" />
+              {errors.education && <p className="text-red-500 text-xs">{errors.education}</p>}
             </div>
             <div>
               <label>{t('occupation')}</label>
               <input name="occupation" value={formData.occupation} onChange={handleInput} placeholder={t('occupation')} className="border p-2 rounded w-full" />
+              {errors.occupation && <p className="text-red-500 text-xs">{errors.occupation}</p>}
             </div>
             <div>
               <label>{t('income')}</label>
               <input name="income" type='text' value={formData.income} onChange={handleInput} placeholder="Eg: ₹50,000/month or 4 LPA" className="border p-2 rounded w-full" />
+              {errors.income && <p className="text-red-500 text-xs">{errors.income}</p>}
+            </div>
+          </div>
+        </div>
+        {/* contact details */}
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold text-orange-600 mb-2">
+            {t('contactDetails')}
+          </h2>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label>{t('contactNumber')}</label>
+              <input name="contactNumber" value={formData.contactNumber} onChange={handleInput} placeholder={t('contactNumber')} className="border p-2 rounded w-full" />
+              {errors.contactNumber && <p className="text-red-500 text-xs">{errors.contactNumber}</p>}
+            </div>
+            <div>
+              <label>{t('contactEmail')}</label>
+              <input name="contactEmail" value={formData.contactEmail} onChange={handleInput} placeholder={t('contactEmail')} className="border p-2 rounded w-full" />
+              {errors.contactEmail && <p className="text-red-500 text-xs">{errors.contactEmail}</p>}
             </div>
           </div>
         </div>
@@ -228,10 +298,12 @@ const PersonalDetails = () => {
             <div>
               <label>{t('timeOfBirth')}</label>
               <input type="time" name="timeOfBirth" value={formData.timeOfBirth} onChange={handleInput} className="border p-2 rounded w-full" />
+              {errors.timeOfBirth && <p className="text-red-500 text-xs">{errors.timeOfBirth}</p>}
             </div>
             <div>
               <label>{t('placeOfBirth')}</label>
               <input name="placeOfBirth" value={formData.placeOfBirth} onChange={handleInput} placeholder={t('placeOfBirth')} className="border p-2 rounded w-full" />
+              {errors.placeOfBirth && <p className="text-red-500 text-xs">{errors.placeOfBirth}</p>}
             </div>
             <div>
               <label>{t('rashi')}</label>
@@ -239,6 +311,7 @@ const PersonalDetails = () => {
                 <option value="" />
                 {rashiOptions.map((r) => <option key={r} value={r}>{r}</option>)}
               </select>
+              {errors.rashi && <p className="text-red-500 text-xs">{errors.rashi}</p>}
             </div>
             <div>
               <label>{t('nakshatra')}</label>
@@ -246,18 +319,23 @@ const PersonalDetails = () => {
                 <option value="" />
                 {nakshatraOptions.map((n) => <option key={n} value={n}>{n}</option>)}
               </select>
+              {errors.nakshatra && <p className="text-red-500 text-xs">{errors.nakshatra}</p>}
             </div>
             <div className="col-span-2">
               <label className="block text-center p-4 border-dashed border-2 border-gray-400 rounded cursor-pointer">
                 {t('photoUpload')}
                 <input type="file" name="photo" accept="image/*" onChange={handleInput} className="hidden" />
               </label>
+              {errors.photo && <p className="text-red-500 text-xs">Please Upload an Image</p>}
             </div>
           </div>
         </div>
 
         <div className="flex justify-end">
-          <button className="px-6 py-2 bg-orange-600 text-white rounded">
+          <button
+            className="px-6 py-2 bg-orange-600 text-white rounded cursor-pointer"
+            onClick={handleSubmit}
+          >
             Choose a Template
           </button>
         </div>
@@ -278,8 +356,8 @@ const PersonalDetails = () => {
             )}
           </div>
 
-          {!hasPersonal && !hasFamily && !hasEducation && !hasHoroscope && (
-            <p className="text-center mt-70 text-lg text-gray-400">Here preview of your biodata will display</p>
+          {!hasPersonal && !hasFamily && !hasEducation && !hasContact && !hasHoroscope && (
+            <p className="text-center mt-60 text-lg text-gray-400">Here preview of your biodata will display</p>
           )}
           <div className="">
             {hasPersonal && (
@@ -323,9 +401,25 @@ const PersonalDetails = () => {
                 </ul>
               </div>
             )}
+            {hasContact && (
+              <div>
+                <h3 className="font-bold text-orange-600">{t('contactDetails')}</h3>
+                <ul className="ml-2">
+                  {formData.contactNumber && <li><strong>{t('contactNumber')}:</strong> {formData.contactNumber}</li>}
+                  {formData.contactEmail && <li><strong>{t('contactEmail')}:</strong> {formData.contactEmail}</li>}
+                </ul>
+              </div>
+            )}
             {hasHoroscope && (
               <div>
-                <h3 className="font-bold text-orange-600">{t('horoscopeDetails')}</h3>
+                {
+                  // remove optional hint from preview heading
+                  (() => {
+                    const label = t('horoscopeDetails');
+                    const clean = label.replace(/\s*\([^)]*\)\s*$/, '');
+                    return <h3 className="font-bold text-orange-600">{clean}</h3>;
+                  })()
+                }
                 <ul className="ml-2">
                   {formData.timeOfBirth && <li><strong>{t('timeOfBirth')}:</strong> {formData.timeOfBirth}</li>}
                   {formData.placeOfBirth && <li><strong>{t('placeOfBirth')}:</strong> {formData.placeOfBirth}</li>}

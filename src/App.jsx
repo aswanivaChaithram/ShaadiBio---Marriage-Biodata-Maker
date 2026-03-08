@@ -5,6 +5,7 @@ import Home from './Pages/Home'
 import Footer from './components/Footer'
 import { Route, Routes, useNavigate, useLocation, Navigate } from 'react-router-dom'
 import PersonalDetails from './Pages/PersonalDetails'
+import Templates from './Pages/Templates'
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -107,6 +108,7 @@ const App = () => {
               />
             }
           />
+
           <Route
             path="/personal-details"
             element={
@@ -117,6 +119,9 @@ const App = () => {
               )
             }
           />
+
+          <Route path='/templates' element={<Templates />} />
+
         </Routes>
       </div>
 
