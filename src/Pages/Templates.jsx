@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Template1 from "../Templates/Template1";
 import Template2 from "../Templates/Template2";
 import Template3 from "../Templates/Template3";
@@ -17,7 +18,10 @@ const Templates = () => {
     Template6,
   ];
 
+  const navigate = useNavigate();
+
   return (
+
     <div className="min-h-screen max-w-7xl mx-auto px-6 py-12">
 
       {/* Heading */}
@@ -41,12 +45,32 @@ const Templates = () => {
             </div>
 
             {/* Button */}
-            <button className="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition">
+            <button className="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition cursor-pointer">
               Select Template
             </button>
 
           </div>
         ))}
+
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="flex justify-end gap-4 mt-10">
+
+        {/* Previous Button */}
+        <button
+          onClick={() => navigate("/personal-details")}
+          className="px-4 py-1.5 border border-blue-700 text-blue-700 font-bold rounded cursor-pointer hover:bg-gray-100"
+        >
+          Back
+        </button>
+
+        {/* Preview Button */}
+        <button
+          className="px-4 py-1.5 border border-orange-600 text-orange-600 font-bold rounded cursor-pointer hover:bg-orange-50"
+        >
+          Preview
+        </button>
 
       </div>
     </div>
