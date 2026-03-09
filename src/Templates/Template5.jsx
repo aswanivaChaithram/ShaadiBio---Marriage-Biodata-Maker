@@ -2,7 +2,7 @@ import React from "react";
 
 const Template5 = () => {
   return (
-    <div className="bg-[#efe7d3] flex justify-center w-full h-full">
+    <div className="bg-[#efe7d3] flex justify-center w-[800px] min-h-[1100px]">
 
       {/* Main Card */}
       <div className="w-full px-10 py-10 border-l-30 border-r-30 border-red-700">

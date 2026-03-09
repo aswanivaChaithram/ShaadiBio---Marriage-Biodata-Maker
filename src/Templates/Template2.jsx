@@ -2,7 +2,7 @@ import React from "react";
 
 const Template2 = () => {
   return (
-    <div className="w-full h-full bg-white shadow-xl">
+    <div className="w-[800px] min-h-[1100px] bg-white shadow-xl">
 
       {/* Top Header */}
       <div className="bg-[#dcc8cf] px-10 py-10 flex items-center gap-10">

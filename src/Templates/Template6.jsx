@@ -2,7 +2,7 @@ import React from 'react';
 
 const Template6 = () => {
   return (
-    <div className="bg-gray-100 flex justify-center p-4 w-full h-full">
+    <div className="bg-gray-100 flex justify-center p-4 w-[800px] min-h-[1100px]">
       {/* Main Container */}
       <div className="bg-white w-full flex shadow-lg relative overflow-hidden">
         
@@ -24,19 +24,19 @@ const Template6 = () => {
 
           {/* Profile Image - Absolute Positioned to match the circular design in image */}
           <div className="absolute top-10 right-8">
-             <div className="w-32 h-32 rounded-full border-4 border-gray-200 overflow-hidden bg-gray-50 flex items-center justify-center text-gray-400 italic shadow-md">
+             <div className="w-40 h-40 rounded-full border-4 border-gray-200 overflow-hidden bg-gray-50 flex items-center justify-center text-gray-400 italic shadow-md">
                 {/* Image will go here */}
                 <span>Profile Photo</span>
              </div>
           </div>
 
           {/* PERSONAL DETAILS SECTION */}
-          <section className="mb-12">
+          <section className="mb-4">
             <h2 className="text-[#c1272d] font-bold text-xl border-b-2 border-[#c1272d] inline-block mb-6 pr-8">
               PERSONAL DETAILS
             </h2>
             
-            <table className="w-full text-gray-800 border-separate border-spacing-y-2">
+            <table className="w-full text-gray-800">
               <tbody className="text-base">
                 {[
                   ["Name", "Dr. Vismaya"],
@@ -48,9 +48,9 @@ const Template6 = () => {
                   ["Height", "5 feet 5 inches"],
                 ].map(([label, value]) => (
                   <tr key={label}>
-                    <td className="w-48 font-medium py-1">{label}</td>
+                    <td className="w-48 font-medium">{label}</td>
                     <td className="w-8 text-center">:</td>
-                    <td className="py-1">{value}</td>
+                    <td>{value}</td>
                   </tr>
                 ))}
                 <tr>
@@ -74,52 +74,52 @@ const Template6 = () => {
           </section>
 
           {/* FAMILY DETAILS SECTION */}
-          <section className="mb-12">
+          <section className="mb-4">
             <h2 className="text-[#c1272d] font-bold text-xl border-b-2 border-[#c1272d] inline-block mb-6 pr-8">
               FAMILY DETAILS
             </h2>
             
-            <table className="w-full text-gray-800 border-separate border-spacing-y-2">
+            <table className="w-full text-gray-800">
               <tbody className="text-base">
                 <tr>
-                  <td className="w-48 font-medium py-1">Father Name</td>
+                  <td className="w-48 font-medium">Father Name</td>
                   <td className="w-8 text-center">:</td>
-                  <td className="py-1">Dr. Prakash</td>
+                  <td>Dr. Prakash</td>
                 </tr>
                 <tr>
-                  <td className="font-medium py-1 align-top">Father's Occupation</td>
-                  <td className="text-center align-top py-1">:</td>
-                  <td className="py-1">General Surgeon,<br/>Working in BTM Hospital</td>
+                  <td className="font-medium align-top">Father's Occupation</td>
+                  <td className="text-center align-top">:</td>
+                  <td>General Surgeon,<br/>Working in BTM Hospital</td>
                 </tr>
                 <tr>
-                  <td className="font-medium py-1">Mother Name</td>
+                  <td className="font-medium">Mother Name</td>
                   <td className="text-center">:</td>
-                  <td className="py-1">Dr. Priyadarshini</td>
+                  <td>Dr. Priyadarshini</td>
                 </tr>
                 <tr>
-                  <td className="font-medium py-1 align-top">Mother's Occupation</td>
-                  <td className="text-center align-top py-1">:</td>
-                  <td className="py-1">Gynecologist,<br/>Working in Asian Hospital</td>
+                  <td className="font-medium align-top">Mother's Occupation</td>
+                  <td className="text-center align-top">:</td>
+                  <td>Gynecologist,<br/>Working in Asian Hospital</td>
                 </tr>
                 <tr>
-                  <td className="font-medium py-1">Brother Name (Younger)</td>
+                  <td className="font-medium">Brother Name (Younger)</td>
                   <td className="text-center">:</td>
-                  <td className="py-1">Ravishankar</td>
+                  <td>Ravishankar</td>
                 </tr>
                 <tr>
                   <td className="font-medium py-1 align-top">Brother's Occupation (Younger)</td>
-                  <td className="text-center align-top py-1">:</td>
-                  <td className="py-1 text-sm">Pursuing B.E in Artificial Intelligence, Bangalore</td>
+                  <td className="text-center align-top">:</td>
+                  <td className="text-sm">Pursuing B.E in Artificial Intelligence, Bangalore</td>
                 </tr>
                 <tr>
-                  <td className="font-medium py-1">Sister Name (Younger)</td>
+                  <td className="font-medium">Sister Name (Younger)</td>
                   <td className="text-center">:</td>
-                  <td className="py-1">Dr. Vaishnavi</td>
+                  <td>Dr. Vaishnavi</td>
                 </tr>
                 <tr>
                   <td className="font-medium py-1 align-top">Sister's Occupation (Younger)</td>
                   <td className="text-center align-top py-1">:</td>
-                  <td className="py-1">Orthopedic Physiotherapist,<br/>Working in TMKC Hospital</td>
+                  <td>Orthopedic Physiotherapist,<br/>Working in TMKC Hospital</td>
                 </tr>
               </tbody>
             </table>
@@ -131,7 +131,7 @@ const Template6 = () => {
               CONTACT DETAILS
             </h2>
             
-            <table className="w-full text-gray-800 border-separate border-spacing-y-2">
+            <table className="w-full text-gray-800">
               <tbody className="text-base">
                 <tr>
                   <td className="w-48 font-medium py-1 align-top">Contact Number</td>
@@ -152,13 +152,7 @@ const Template6 = () => {
               </tbody>
             </table>
           </section>
-
-          {/* Footer Branding */}
-          <div className="absolute bottom-6 right-10">
-            <p className="text-[#c1272d] text-xs font-semibold opacity-70">
-              www.CreateMyBiodata.com
-            </p>
-          </div>
+          
         </div>
       </div>
     </div>

@@ -32,7 +32,7 @@ const Templates = () => {
           <div key={index} className="flex flex-col items-center gap-4">
 
             {/* Preview Card */}
-            <div className="w-[320px] h-[600px] overflow-hidden border rounded-lg shadow-md bg-white flex justify-center">
+            <div className="w-[312px] h-[430px] overflow-hidden rounded-lg flex justify-center">
 
               <div className="scale-[0.38] origin-top">
                 <Template />

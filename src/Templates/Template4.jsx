@@ -2,7 +2,7 @@ import React from "react";
 
 const Template4 = () => {
   return (
-    <div className="w-full h-full flex items-center justify-center p-10">
+    <div className="w-[800px] min-h-[1100px] flex items-center justify-center p-10">
 
       {/* Biodata Card */}
       <div className="bg-white w-full border-4 border-white outline-40 outline-red-700 p-10">
