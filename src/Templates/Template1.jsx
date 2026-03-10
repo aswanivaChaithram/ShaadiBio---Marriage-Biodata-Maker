@@ -1,8 +1,50 @@
 import React from "react";
+import { useBiodata } from "../Context/BiodataContext";
+import { useTranslation } from "react-i18next";
 
 const Template1 = () => {
+
+  const { biodata } = useBiodata();
+  const { t } = useTranslation();
+
+  const hasPersonal =
+    biodata.name ||
+    biodata.gender ||
+    biodata.dob ||
+    biodata.age ||
+    biodata.height ||
+    biodata.religion ||
+    biodata.caste ||
+    biodata.motherTongue ||
+    biodata.maritalStatus ||
+    biodata.nationality;
+
+  const hasFamily =
+    biodata.fatherName ||
+    biodata.fatherOccupation ||
+    biodata.motherName ||
+    biodata.motherOccupation ||
+    biodata.totalBrothers ||
+    biodata.totalSisters ||
+    biodata.nativePlace;
+
+  const hasEducation =
+    biodata.education ||
+    biodata.occupation ||
+    biodata.income;
+
+  const hasContact =
+    biodata.contactNumber ||
+    biodata.contactEmail;
+
+  const hasHoroscope =
+    biodata.timeOfBirth ||
+    biodata.placeOfBirth ||
+    biodata.rashi ||
+    biodata.nakshatra;
+
   return (
-    <div className="w-[800px] min-h-[1100px] border-4 border-orange-400 p-8 bg-gray-100">
+    <div className="w-[800px] min-h-[1100px] relative border-4 border-orange-400 p-8 bg-gray-100">
 
       {/* Title */}
       <h2 className="text-center text-lg font-semibold tracking-wide mb-6">
@@ -10,126 +52,304 @@ const Template1 = () => {
       </h2>
 
       {/* Top Section */}
-      <div className="flex gap-6 items-start mb-8">
+      <div className="flex gap-6 items-start mb-6">
 
         {/* Profile Image */}
-        <div className="w-32 h-36 bg-gray-300 flex items-center justify-center">
-          <span className="text-xs text-gray-600">Profile Image</span>
+        <div className="w-32 h-36 bg-gray-300 flex items-center justify-center overflow-hidden">
+          {biodata.photo ? (
+            <img
+              src={
+                typeof biodata.photo === "string"
+                  ? biodata.photo
+                  : URL.createObjectURL(biodata.photo)
+              }
+              alt="profile"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <span className="text-xs text-gray-600">Profile Image</span>
+          )}
         </div>
 
-        {/* Name + basic info */}
+        {/* Name */}
         <div>
           <h1 className="text-3xl font-bold text-orange-500 mb-3">
-            Saurabh Kumar Singh
+            {biodata.name || "Your Name"}
           </h1>
 
-          <p className="mb-1">
-            <span className="font-semibold">Date of Birth:</span> 04/05/1997
+          <p className="mb-1"> 
+            <span className="font-semibold">{t("dob")}:</span> 
+            {biodata.dob} 
+          </p> 
+          
+          <p> 
+            <span className="font-semibold">{t("placeOfBirth")}:</span>
+            {biodata.placeOfBirth} 
           </p>
 
-          <p>
-            <span className="font-semibold">Place of Birth:</span> Delhi, India
-          </p>
         </div>
+
       </div>
 
-      {/* Personal Details */}
-      <div className="mb-8">
-        <h3 className="font-bold underline mb-4">PERSONAL DETAILS</h3>
+      {/* PERSONAL DETAILS */}
+      {hasPersonal && (
+        <div className="mb-6">
 
-        <div className="grid grid-cols-2 gap-y-2 text-sm">
+          <h3 className="font-bold underline mb-4">
+            {t("personalDetails")}
+          </h3>
 
-          <p>Name:</p>
-          <p>Saurabh Kumar Singh</p>
+          <div className="grid grid-cols-2 gap-y-2 text-sm">
 
-          <p>Date of Birth:</p>
-          <p>04/05/1997</p>
+            {biodata.name && (
+              <>
+                <p>{t("name")}:</p>
+                <p>{biodata.name}</p>
+              </>
+            )}
 
-          <p>Place of Birth:</p>
-          <p>Delhi, India</p>
+            {biodata.gender && (
+              <>
+                <p>{t("gender")}:</p>
+                <p>{biodata.gender}</p>
+              </>
+            )}
 
-          <p>Height:</p>
-          <p>5 feet 9 inches</p>
+            {biodata.dob && (
+              <>
+                <p>{t("dob")}:</p>
+                <p>{biodata.dob}</p>
+              </>
+            )}
 
-          <p>Caste:</p>
-          <p>Brahmin</p>
+            {biodata.age && (
+              <>
+                <p>{t("age")}:</p>
+                <p>{biodata.age}</p>
+              </>
+            )}
 
-          <p>Gotra:</p>
-          <p>Mittal</p>
+            {biodata.height && (
+              <>
+                <p>{t("height")}:</p>
+                <p>{biodata.height}</p>
+              </>
+            )}
 
-          <p>Education:</p>
-          <p>
-            MD from Amity University <br />
-            BSc from Galgotias University
-          </p>
+            {biodata.religion && (
+              <>
+                <p>{t("religion")}:</p>
+                <p>{biodata.religion}</p>
+              </>
+            )}
 
-          <p>Job:</p>
-          <p>Marketing Manager - Zomato</p>
+            {biodata.caste && (
+              <>
+                <p>{t("caste")}:</p>
+                <p>{biodata.caste}</p>
+              </>
+            )}
 
-          <p>Languages:</p>
-          <p>Hindi, English</p>
+            {biodata.motherTongue && (
+              <>
+                <p>{t("motherTongue")}:</p>
+                <p>{biodata.motherTongue}</p>
+              </>
+            )}
 
-          <p>Hobby:</p>
-          <p>Photography, Politics, Fitness</p>
+            {biodata.maritalStatus && (
+              <>
+                <p>{t("maritalStatus")}:</p>
+                <p>{biodata.maritalStatus}</p>
+              </>
+            )}
 
-        </div>
-      </div>
+            {biodata.nationality && (
+              <>
+                <p>{t("nationality")}:</p>
+                <p>{biodata.nationality}</p>
+              </>
+            )}
 
-      {/* Family Details */}
-      <div className="mb-8">
-        <h3 className="font-bold underline mb-4">FAMILY DETAILS</h3>
-
-        <div className="grid grid-cols-2 gap-y-2 text-sm">
-
-          <p>Grandfather’s Name:</p>
-          <p>Dr. SD Kumar Singh</p>
-
-          <p>Grandfather’s Occupation:</p>
-          <p>Retired Maths Professor - IIT BHU</p>
-
-          <p>Father’s Name:</p>
-          <p>Sh. Deepak Kumar Singh</p>
-
-          <p>Father’s Occupation:</p>
-          <p>Business - Children Clothing Store in New Delhi</p>
-
-          <p>Mother’s Name:</p>
-          <p>Smt. Madhu Kumar Singh</p>
-
-          <p>Mother’s Occupation:</p>
-          <p>Homemaker</p>
-
-          <p>Uncle’s Name:</p>
-          <p>Sh. Shubham Singh</p>
-
-          <p>Uncle’s Occupation:</p>
-          <p>Senior Manager Software Development</p>
-
-          <p>Younger Brother’s Name:</p>
-          <p>Abhinav Singh</p>
-
-          <p>Younger Brother’s Occupation:</p>
-          <p>Embedded Software Engineer</p>
-
-        </div>
-      </div>
-
-      {/* Contact Details */}
-      <div>
-        <h3 className="font-bold underline mb-4">CONTACT DETAILS</h3>
-
-        <div className="grid grid-cols-2 gap-y-2 text-sm">
-
-          <p>Contact Person:</p>
-          <p>Sh. Deepak Kumar Singh</p>
-
-          <p>Contact Number:</p>
-          <p>(1) 222-222-2222</p>
-
-          <p>Email:</p>
-          <p>deepak.kumar@mail.com</p>
+          </div>
 
         </div>
+      )}
+
+      {/* FAMILY BACKGROUND */}
+      {hasFamily && (
+        <div className="mb-6">
+
+          <h3 className="font-bold underline mb-4">
+            {t("familyBackgroundDetails")}
+          </h3>
+
+          <div className="grid grid-cols-2 gap-y-2 text-sm">
+
+            {biodata.fatherName && (
+              <>
+                <p>{t("fatherName")}:</p>
+                <p>{biodata.fatherName}</p>
+              </>
+            )}
+
+            {biodata.fatherOccupation && (
+              <>
+                <p>{t("fatherOccupation")}:</p>
+                <p>{biodata.fatherOccupation}</p>
+              </>
+            )}
+
+            {biodata.motherName && (
+              <>
+                <p>{t("motherName")}:</p>
+                <p>{biodata.motherName}</p>
+              </>
+            )}
+
+            {biodata.motherOccupation && (
+              <>
+                <p>{t("motherOccupation")}:</p>
+                <p>{biodata.motherOccupation}</p>
+              </>
+            )}
+
+            {biodata.totalBrothers && (
+              <>
+                <p>{t("totalBrothers")}:</p>
+                <p>{biodata.totalBrothers}</p>
+              </>
+            )}
+
+            {biodata.totalSisters && (
+              <>
+                <p>{t("totalSisters")}:</p>
+                <p>{biodata.totalSisters}</p>
+              </>
+            )}
+
+            {biodata.nativePlace && (
+              <>
+                <p>{t("nativePlaceResidence")}:</p>
+                <p>{biodata.nativePlace}</p>
+              </>
+            )}
+
+          </div>
+
+        </div>
+      )}
+
+      {/* EDUCATION & PROFESSIONAL */}
+      {hasEducation && (
+        <div className="mb-6">
+
+          <h3 className="font-bold underline mb-4">
+            {t("educationProfessionalDetails")}
+          </h3>
+
+          <div className="grid grid-cols-2 gap-y-2 text-sm">
+
+            {biodata.education && (
+              <>
+                <p>{t("education")}:</p>
+                <p>{biodata.education}</p>
+              </>
+            )}
+
+            {biodata.occupation && (
+              <>
+                <p>{t("occupation")}:</p>
+                <p>{biodata.occupation}</p>
+              </>
+            )}
+
+            {biodata.income && (
+              <>
+                <p>{t("income")}:</p>
+                <p>₹{Number(biodata.income).toLocaleString("en-IN")}</p>
+              </>
+            )}
+
+          </div>
+
+        </div>
+      )}
+
+      {/* CONTACT */}
+      {hasContact && (
+        <div className="mb-6">
+
+          <h3 className="font-bold underline mb-4">
+            {t("contactDetails")}
+          </h3>
+
+          <div className="grid grid-cols-2 gap-y-2 text-sm">
+
+            {biodata.contactNumber && (
+              <>
+                <p>{t("contactNumber")}:</p>
+                <p>{biodata.contactNumber}</p>
+              </>
+            )}
+
+            {biodata.contactEmail && (
+              <>
+                <p>{t("contactEmail")}:</p>
+                <p>{biodata.contactEmail}</p>
+              </>
+            )}
+
+          </div>
+
+        </div>
+      )}
+
+      {/* HOROSCOPE */}
+      {hasHoroscope && (
+        <div className="mb-6">
+
+          <h3 className="font-bold underline mb-4">
+            {t("horoscopeDetails").replace(/\s*\([^)]*\)\s*$/, "")}
+          </h3>
+
+          <div className="grid grid-cols-2 gap-y-2 text-sm">
+
+            {biodata.timeOfBirth && (
+              <>
+                <p>{t("timeOfBirth")}:</p>
+                <p>{biodata.timeOfBirth}</p>
+              </>
+            )}
+
+            {biodata.placeOfBirth && (
+              <>
+                <p>{t("placeOfBirth")}:</p>
+                <p>{biodata.placeOfBirth}</p>
+              </>
+            )}
+
+            {biodata.rashi && (
+              <>
+                <p>{t("rashi")}:</p>
+                <p>{biodata.rashi}</p>
+              </>
+            )}
+
+            {biodata.nakshatra && (
+              <>
+                <p>{t("nakshatra")}:</p>
+                <p>{biodata.nakshatra}</p>
+              </>
+            )}
+
+          </div>
+
+        </div>
+      )}
+
+      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-gray-400 text-sm">
+            Generated by ShaadiBio
       </div>
 
     </div>

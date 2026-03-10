@@ -7,6 +7,7 @@ import { Route, Routes, useNavigate, useLocation, Navigate } from 'react-router-
 import PersonalDetails from './Pages/PersonalDetails'
 import Templates from './Pages/Templates'
 import Preview from './Pages/Preview'
+import Dashboard from './Pages/Dashboard'
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -124,6 +125,8 @@ const App = () => {
           <Route path='/templates' element={<Templates />} />
 
           <Route path='/preview' element={<Preview />} />
+
+          <Route path="/dashboard" element={<Dashboard logoutUser={logoutUser} />} />
 
         </Routes>
       </div>

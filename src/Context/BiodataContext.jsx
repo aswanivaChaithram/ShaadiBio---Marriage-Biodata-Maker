@@ -5,7 +5,10 @@ const BiodataContext = createContext();
 export const useBiodata = () => useContext(BiodataContext);
 
 const initialState = {
+
   language: "en",
+  selectedTemplate: null,
+
   biodata: {
     name: "",
     gender: "",
@@ -65,6 +68,21 @@ export const BiodataProvider = ({ children }) => {
     }));
   };
 
+  // store selected template
+  const selectTemplate = (index) => {
+    setData((prev) => ({
+      ...prev,
+      selectedTemplate: index,
+    }));
+  };
+
+  const resetTemplate = () => {
+    setData((prev) => ({
+      ...prev,
+      selectedTemplate: null,
+    }));
+  };
+
   const clearBiodata = () => {
     localStorage.removeItem("biodata");
     setData(initialState);
@@ -76,8 +94,11 @@ export const BiodataProvider = ({ children }) => {
         data,
         biodata: data.biodata,
         language: data.language,
+        selectedTemplate: data.selectedTemplate,
         updateField,
         setLanguage,
+        selectTemplate, 
+        resetTemplate,
         clearBiodata,
       }}
     >

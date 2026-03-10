@@ -27,13 +27,13 @@ const LivePreview = ({ formData }) => {
           </div>
 
           {!hasPersonal && !hasFamily && !hasEducation && !hasContact && !hasHoroscope && (
-            <p className="text-center mt-60 text-lg text-gray-400">Here preview of your biodata will display</p>
+            <p className="text-center mt-50 md:mt-60 mb-20 text-lg text-gray-400">Here preview of your biodata will display</p>
           )}
           <div className="text-xs">
             {hasPersonal && (
               <div>
                 {formData.name && <h1 className='font-bold text-lg text-center'>{formData.name}</h1>}
-                <h3 className="font-bold mt-4 text-orange-600">{t('personalDetails')}</h3>
+                <h3 className="font-bold mt-2 text-orange-600">{t('personalDetails')}</h3>
                 <ul className="ml-2">
                   {formData.name && <li><strong>{t('name')}:</strong> {formData.name}</li>}
                   {formData.gender && <li><strong>{t('gender')}:</strong> {formData.gender}</li>}
@@ -82,7 +82,7 @@ const LivePreview = ({ formData }) => {
               </div>
             )}
             {hasHoroscope && (
-              <div className='mt-2'>
+              <div className='mt-2 mb-8 md:mb-0'>
                 {
                   // remove optional hint from preview heading
                   (() => {
