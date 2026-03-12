@@ -14,7 +14,7 @@ const Template5 = () => {
     biodata.nakshatra;
 
   return (
-    <div className="bg-[#efe7d3] flex justify-center w-[800px] min-h-[1100px]">
+    <div className="bg-[#efe7d3] flex justify-center w-[794px] min-h-[1123px]">
 
       {/* Main Card */}
       <div className="w-full px-10 py-10 relative border-l-[30px] border-r-[30px] border-red-700">
@@ -126,11 +126,7 @@ const Template5 = () => {
 
             {biodata.photo ? (
               <img
-                src={
-                  typeof biodata.photo === "string"
-                    ? biodata.photo
-                    : URL.createObjectURL(biodata.photo)
-                }
+                src={biodata.photo}
                 alt="profile"
                 className="w-full h-full object-cover"
               />

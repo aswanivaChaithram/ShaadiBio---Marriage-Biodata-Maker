@@ -14,7 +14,7 @@ const Template6 = () => {
     biodata.nakshatra;
 
   return (
-    <div className="bg-gray-100 flex justify-center p-4 w-[800px] min-h-[1100px]">
+    <div className="bg-gray-100 flex justify-center p-4 w-[794px] min-h-[1123px]">
 
       {/* Main Container */}
       <div className="bg-white w-full relative flex shadow-lg relative overflow-hidden">
@@ -41,11 +41,7 @@ const Template6 = () => {
 
               {biodata.photo ? (
                 <img
-                  src={
-                    typeof biodata.photo === "string"
-                      ? biodata.photo
-                      : URL.createObjectURL(biodata.photo)
-                  }
+                  src={biodata.photo}
                   alt="profile"
                   className="w-full h-full object-cover"
                 />

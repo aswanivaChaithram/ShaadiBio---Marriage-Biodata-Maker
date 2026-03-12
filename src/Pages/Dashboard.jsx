@@ -34,23 +34,51 @@ const Dashboard = ({ logoutUser }) => {
 
   const downloadPDF = async (id) => {
 
-    const element = document.getElementById(`template-${id}`);
+  const element = document.getElementById(`template-${id}`);
 
-    const canvas = await html2canvas(element);
+  if (!element) {
+    console.error("Template element not found");
+    return;
+  }
 
-    const imgData = canvas.toDataURL("image/png");
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#ffffff",
+    letterRendering: true,
+    windowWidth: element.scrollWidth,
+    windowHeight: element.scrollHeight,
 
-    const pdf = new jsPDF("p", "mm", "a4");
+    onclone: (clonedDoc) => {
+      const all = clonedDoc.querySelectorAll("*");
 
-    const width = pdf.internal.pageSize.getWidth();
+      all.forEach((el) => {
+        const style = window.getComputedStyle(el);
 
-    const height = (canvas.height * width) / canvas.width;
+        if (style.color.includes("oklch")) {
+          el.style.color = "#000000";
+        }
 
-    pdf.addImage(imgData, "PNG", 0, 0, width, height);
+        if (style.backgroundColor.includes("oklch")) {
+          el.style.backgroundColor = "#ffffff";
+        }
 
-    pdf.save("ShaadiBio.pdf");
+        if (style.borderColor.includes("oklch")) {
+          el.style.borderColor = "#000000";
+        }
+      });
+    }
+  });
 
-  };
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
+
+  pdf.save("ShaadiBio.pdf");
+
+};
 
   return (
 
@@ -144,29 +172,28 @@ const Dashboard = ({ logoutUser }) => {
                     return (
 
                       <div
-                        key={index}
+                        key={item.id}
                         className="flex flex-col items-center"
                       >
 
                         {/* Preview Card */}
 
-                        <div
-                          id={`template-${item.id}`}
-                          className="w-[312px] h-[500px] overflow-hidden rounded-lg flex justify-center border bg-white"
-                        >
+                        <div className="scale-[0.38] origin-top">
 
-                          <div className="scale-[0.38] origin-top">
-
+                          <div
+                            id={`template-${item.id}`}
+                            style={{
+                              width: "794px",
+                              minHeight: "1123px",
+                              background: "white"
+                            }}
+                          >
                             <Template />
-
                           </div>
 
                         </div>
 
-                        <button
-                          onClick={() =>
-                            downloadPDF(item.id)
-                          }
+                        <button onClick={() => downloadPDF(item.id)}
                           className="mt-4 px-5 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 cursor-pointer"
                         >
                           Download

@@ -24,14 +24,23 @@ const PersonalDetails = () => {
 }, [biodata.dob]);
 
   const handleInput = (e) => {
+    
   const { name, value, files } = e.target;
 
-  if (name === "photo" && files.length) {
-    const url = URL.createObjectURL(files[0]);
-    updateField(name, url);
-  } else {
-    updateField(name, value);
-  }
+    if (name === "photo" && files.length) {
+
+      const file = files[0];
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        updateField(name, reader.result); // save Base64 image
+      };
+
+      reader.readAsDataURL(file);
+
+    } else {
+      updateField(name, value);
+    }
 
     // clear validation error for this field once user types
     if (errors[name]) {

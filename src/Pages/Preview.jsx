@@ -54,25 +54,53 @@ const Preview = () => {
   };
 
   // DOWNLOAD PDF
-  const downloadPDF = async () => {
+const downloadPDF = async () => {
 
-    const element = templateRef.current;
+  const element = templateRef.current;
 
-    const canvas = await html2canvas(element);
+  if (!element) {
+    console.error("Template element not found");
+    return;
+  }
 
-    const imgData = canvas.toDataURL("image/png");
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#ffffff",
+    letterRendering: true,
+    windowWidth: element.scrollWidth,
+    windowHeight: element.scrollHeight,
 
-    const pdf = new jsPDF("p", "mm", "a4");
+    onclone: (clonedDoc) => {
+      const all = clonedDoc.querySelectorAll("*");
 
-    const width = pdf.internal.pageSize.getWidth();
+      all.forEach((el) => {
+        const style = window.getComputedStyle(el);
 
-    const height =
-      (canvas.height * width) / canvas.width;
+        if (style.color.includes("oklch")) {
+          el.style.color = "#000000";
+        }
 
-    pdf.addImage(imgData, "PNG", 0, 0, width, height);
+        if (style.backgroundColor.includes("oklch")) {
+          el.style.backgroundColor = "#ffffff";
+        }
 
-    pdf.save("ShaadiBio.pdf");
-  };
+        if (style.borderColor.includes("oklch")) {
+          el.style.borderColor = "#000000";
+        }
+      });
+    }
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  // exact A4 size
+  pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
+
+  pdf.save("ShaadiBio.pdf");
+};
 
   return (
     <div className="bg-gray-100 py-6 md:py-10 h-fit">
@@ -81,14 +109,17 @@ const Preview = () => {
         Preview
       </h1>
 
-      <div className="flex justify-center items-start overflow-hidden">
+      <div className="flex justify-center overflow-auto">
 
+      <div className="scale-40 sm:scale-60 md:scale-100 origin-top">
         <div
           ref={templateRef}
-          className="bg-white shadow-lg p-6 h-fit scale-40 sm:scale-60 md:scale-100 origin-top"
-        >
-          {SelectedTemplate && <SelectedTemplate />}
+          className="bg-white shadow-lg p-6"
+           style={{ width: "794px", minHeight: "1123px" }} >
+            {SelectedTemplate && <SelectedTemplate />}
         </div>
+
+       </div>
 
       </div>
 
@@ -115,7 +146,10 @@ const Preview = () => {
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40">
 
-          <div className="bg-white p-8 rounded shadow-lg text-center w-[350px]">
+          <div className="relative bg-white p-8 rounded shadow-lg text-center w-[380px]">
+
+            <button className="absolute top-2 right-4 text-xl text-gray-600 cursor-pointer" 
+            onClick={ () => setShowPopup(false)}>✖</button>
 
             <h2 className="text-xl font-bold mb-6">
               Your Template is saved successfully in Dashboard
@@ -125,7 +159,7 @@ const Preview = () => {
               onClick={downloadPDF}
               className="px-5 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 cursor-pointer"
             >
-              Download
+              Download PDF
             </button>
 
           </div>
@@ -136,5 +170,6 @@ const Preview = () => {
     </div>
   );
 };
+
 
 export default Preview;
