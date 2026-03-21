@@ -6,7 +6,7 @@ const Navbar = ({
   setShowLogin,
   setCurrentState,
   isAuthenticated,
-  logoutUser,
+  logoutUser
 }) => {
   const navigate = useNavigate();
   const location = useLocation();

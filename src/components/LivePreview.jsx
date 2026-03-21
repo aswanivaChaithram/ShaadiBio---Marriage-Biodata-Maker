@@ -84,7 +84,6 @@ const LivePreview = ({ formData }) => {
             {hasHoroscope && (
               <div className='mt-2 mb-8 md:mb-0'>
                 {
-                  // remove optional hint from preview heading
                   (() => {
                     const label = t('horoscopeDetails');
                     const clean = label.replace(/\s*\([^)]*\)\s*$/, '');

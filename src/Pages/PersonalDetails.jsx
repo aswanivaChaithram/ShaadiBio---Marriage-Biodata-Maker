@@ -75,7 +75,7 @@ const PersonalDetails = () => {
 
     // Age validation
     if (biodata.age && Number(biodata.age) < 18) {
-      newErrors.age = "Age should be greater than or equal to 18";
+      newErrors.age = window.confirm("Age should be greater than or equal to 18");
     }
 
     if (Object.keys(newErrors).length > 0) {

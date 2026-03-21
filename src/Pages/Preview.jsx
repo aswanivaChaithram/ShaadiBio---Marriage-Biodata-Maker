@@ -152,7 +152,7 @@ const downloadPDF = async () => {
             onClick={ () => setShowPopup(false)}>✖</button>
 
             <h2 className="text-xl font-bold mb-6">
-              Your Template is saved successfully in Dashboard
+              Your Biodata is saved successfully in Dashboard
             </h2>
 
             <button

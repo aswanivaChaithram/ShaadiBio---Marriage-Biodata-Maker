@@ -170,37 +170,40 @@ const Dashboard = ({ logoutUser }) => {
                       templates[item.templateIndex];
 
                     return (
-
                       <div
                         key={item.id}
-                        className="flex flex-col items-center"
+                        className="flex flex-col items-start gap-8"
                       >
-
-                        {/* Preview Card */}
-
-                        <div className="scale-[0.38] origin-top">
-
-                          <div
-                            id={`template-${item.id}`}
-                            style={{
-                              width: "794px",
-                              minHeight: "1123px",
-                              background: "white"
-                            }}
-                          >
-                            <Template />
+                        {/* Preview Wrapper */}
+                        <div
+                          className="overflow-hidden"
+                          style={{
+                            width: "300px",
+                            height: "420px" // ≈ 1123 * 0.38
+                          }}
+                        >
+                          <div className="scale-[0.38] origin-top-left">
+                            <div
+                              id={`template-${item.id}`}
+                              style={{
+                                width: "794px",
+                                minHeight: "1123px",
+                                background: "white"
+                              }}
+                            >
+                              <Template />
+                            </div>
                           </div>
-
                         </div>
 
-                        <button onClick={() => downloadPDF(item.id)}
-                          className="mt-4 px-5 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 cursor-pointer"
+                        {/* Button */}
+                        <button
+                          onClick={() => downloadPDF(item.id)}
+                          className="px-5 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 cursor-pointer"
                         >
                           Download
                         </button>
-
                       </div>
-
                     );
 
                   })}
